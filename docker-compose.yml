@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:5
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGODB_DATABASE: contact
+    volumes:
+      - ./mongo:/data/db
+  contact:
+    image: contact
+    container_name: ms-core
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: npm run start:debug
+    depends_on:
+      - mongodb
+    volumes:
+      - ".:/usr/src/app"
+      - "/usr/src/app/node_modules"
+    ports:
+      - 3002:3002
+      - 9229:9229
+    tty: true
