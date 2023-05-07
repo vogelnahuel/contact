@@ -42,17 +42,17 @@ export class ContactController {
         return Response.create<CreateContactResponse>(response);
     }
     @ApiOperation({ summary: 'get by email' })
-    @ApiQuery({ name: 'email', required: true })
+    @ApiQuery({ type: FindByEmailDto })
     @ApiOkResponse({ type: FindByEmailResponse })
-    @Get('email')
-    async findByEmail(@Query() dto: FindByEmailDto) {
-        const response: FindByEmailResponse = await this.contactService.findByEmail(dto.email);
+    @Get('/email')
+    async findByEmail(@Query() email: FindByEmailDto) {
+        const response: FindByEmailResponse = await this.contactService.findByEmail(email.email);
         return Response.create<FindByEmailResponse>(response);
     }
 
     @Get('/search')
     @ApiOperation({ summary: 'Search contacts' })
-    @ApiQuery({ type: SearchContactDto })
+    @ApiQuery({ type: SearchContactDto, required: false })
     @ApiOkResponse({ type: SearchContactsResponse })
     async searchContacts(@Query() searchContactDto: SearchContactDto) {
         const response = await this.contactService.searchContacts(searchContactDto);

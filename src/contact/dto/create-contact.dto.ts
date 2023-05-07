@@ -37,12 +37,13 @@ export class CreateContactDto {
     @IsEmail()
     @IsNotEmpty()
     email: string;
-    @ApiProperty()
+    @ApiProperty({ type: () => [CreatePhoneDto] })
     @ArrayNotEmpty()
     @ArrayMinSize(1)
     @ValidateNested({ each: true })
     @Type(() => CreatePhoneDto)
     phones?: CreatePhoneDto[];
+    @ApiProperty({ type: () => [CreateHomeDto] })
     @ApiProperty()
     @ArrayNotEmpty()
     @ArrayMinSize(1)

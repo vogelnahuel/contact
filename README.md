@@ -2,72 +2,76 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# Requisitos previos
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+_Tener docker instalado_
 
-## Description
+# Ejecutar en desarrollo
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+1. Clonar el repositorio
 
-## Installation
+2. Ejecutar
 
-```bash
-$ npm install
+```
+yarn install o npm install
 ```
 
-## Running the app
+3. Tener Nest CLI instalado
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```
+npm i -g @nestjs/cli
 ```
 
-## Test
+4. Levantar la base de datos y la app
 
-```bash
-# unit tests
-$ npm run test
+```
+primero sh build (por unica vez) y luego sh start
+o en su lugar hacer
 
-# e2e tests
-$ npm run test:e2e
+1=sudo docker-compose -f docker-compose.yml build contact
 
-# test coverage
-$ npm run test:cov
+2=docker-compose -f docker-compose.yml up -d
+
+para remover el contenedor
+sh stop  o docker-compose -f docker-compose.yml down
 ```
 
-## Support
+5. Para comprobar que todo funciona correctamente usar comando
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```
+docker logs -f nombre_del_contenedor (ms-core)
+```
 
-## Stay in touch
+## Stack usado
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+-   MongoDB
+-   Nest
+-   Typescript
+-   Docker
+-   jest
 
-## License
+## Explicacion de la resolucion
 
-Nest is [MIT licensed](LICENSE).
+```
+La mejor implementacion para esto es utilizar un postgre porque es algo
+muy relacional debido a que la propia consigna te da las relaciones pero no especificaba que base usar
+use la de mas flexible mongoDB
+(la consigna no lo especificaba)
+```
+
+```
+No vi la necesidad de utilizar micro servicios al ser tan pocas funcionalidades.
+pero si tuviese que implementarlo seria con rabbitmq
+```
+
+```
+Utilize jest para test unitarios ya viene integrado con nest.js  (Comando npm run test para probarlo)
+```
+
+```
+Patrones de diseños implementados -> DTO,DAO,INYECCION DE DEPENDENCIAS.
+```
+
+```
+Como todos los endpoints estan referidos a contactos implemente todos los endpoint en el controlador de contactos
+```
