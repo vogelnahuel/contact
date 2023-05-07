@@ -11,16 +11,16 @@ import {
     UpdateContactResponse,
 } from './response/contact.response';
 import { SearchContactDto } from './dto/search-contact.dto';
-import { PhoneService } from 'src/phone/phone.service';
-import { HomeService } from 'src/home/home.service';
-import { CreatePhoneDto } from 'src/phone/dto/create-phone.dto';
-import { CreateHomeDto } from 'src/home/dto/create-home.dto';
-import { Phone } from 'src/phone/entities/phone.entity';
+import { PhoneService } from '../phone/phone.service';
+import { HomeService } from '../home/home.service';
+import { CreatePhoneDto } from '../phone/dto/create-phone.dto';
+import { CreateHomeDto } from '../home/dto/create-home.dto';
+import { Phone } from '../phone/entities/phone.entity';
 import { SearchByAddressDto } from './dto/search-address.dto';
 import { UpdateContactDto } from './dto/update-contact.dto';
-import { CreatePhoneResponse } from 'src/phone/response/phone.response';
-import { CreateHomeResponse } from 'src/home/response/home.response';
-import { Home } from 'src/home/entities/home.entity';
+import { CreatePhoneResponse } from '../phone/response/phone.response';
+import { CreateHomeResponse } from '../home/response/home.response';
+import { Home } from '../home/entities/home.entity';
 
 @Injectable()
 export class ContactService {

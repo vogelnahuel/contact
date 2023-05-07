@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsOptional, ValidateNested, ArrayNotEmpty, ArrayMinSize } from 'class-validator';
 import { Type } from 'class-transformer';
-import { CreatePhoneDto } from 'src/phone/dto/create-phone.dto';
-import { CreateHomeDto } from 'src/home/dto/create-home.dto';
+import { CreatePhoneDto } from '../../phone/dto/create-phone.dto';
+import { CreateHomeDto } from '../../home/dto/create-home.dto';
 
 export class UpdateContactDto {
     @ApiProperty({ required: false })

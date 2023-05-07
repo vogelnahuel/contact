@@ -8,8 +8,8 @@ import {
     IsString,
     ValidateNested,
 } from 'class-validator';
-import { CreateHomeDto } from 'src/home/dto/create-home.dto';
-import { CreatePhoneDto } from 'src/phone/dto/create-phone.dto';
+import { CreateHomeDto } from '../../home/dto/create-home.dto';
+import { CreatePhoneDto } from '../../phone/dto/create-phone.dto';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateContactDto {
