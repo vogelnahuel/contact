@@ -35,11 +35,6 @@ export class ContactController {
         return this.contactService.findOne(+id);
     }
 
-    @Patch(':id')
-    update(@Param('id') id: string, @Body() updateContactDto: UpdateContactDto) {
-        return this.contactService.update(+id, updateContactDto);
-    }
-
     @Delete(':id')
     remove(@Param('id') id: string) {
         return this.contactService.remove(+id);

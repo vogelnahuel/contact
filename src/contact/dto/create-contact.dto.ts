@@ -33,10 +33,10 @@ export class CreateContactDto {
     @ArrayMinSize(1)
     @ValidateNested({ each: true })
     @Type(() => CreatePhoneDto)
-    phones: CreatePhoneDto[];
+    phones?: CreatePhoneDto[];
     @ArrayNotEmpty()
     @ArrayMinSize(1)
     @ValidateNested({ each: true })
     @Type(() => CreateHomeDto)
-    homes: CreateHomeDto[];
+    homes?: CreateHomeDto[];
 }
