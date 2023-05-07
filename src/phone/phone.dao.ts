@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Phone } from './entities/phone.entity';
 import { CreatePhoneDto } from './dto/create-phone.dto';
 
@@ -10,5 +10,11 @@ export class PhoneDao {
 
     async save(createHolidayDto: CreatePhoneDto): Promise<Phone> {
         return await this.phoneModel.create(createHolidayDto);
+    }
+    async searchByPhone(phone: number): Promise<Phone[]> {
+        return await this.phoneModel.find({ number: phone }).populate('contact');
+    }
+    async deletePhonesByContact(id: string): Promise<void> {
+        await this.phoneModel.deleteMany({ contact: new Types.ObjectId(id) });
     }
 }

@@ -26,4 +26,10 @@ export class ContactDao {
 
         return this.contactModel.aggregate([{ $match: matchQuery }]).exec();
     }
+    async findById(id: string): Promise<Contact> {
+        return await this.contactModel.findById(id);
+    }
+    async deleteContact(id: string): Promise<void> {
+        await this.contactModel.findByIdAndDelete(id);
+    }
 }

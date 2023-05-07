@@ -1,4 +1,4 @@
-import { IsOptional, IsString, IsNumber, IsEmail } from 'class-validator';
+import { IsOptional, IsString, IsEmail } from 'class-validator';
 
 export class SearchContactDto {
     @IsOptional()
@@ -14,11 +14,11 @@ export class SearchContactDto {
     document_type?: string;
 
     @IsOptional()
-    @IsNumber()
+    @IsString()
     document_number?: number;
 
     @IsOptional()
-    @IsNumber()
+    @IsString()
     age?: number;
 
     @IsOptional()

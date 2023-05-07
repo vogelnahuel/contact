@@ -1,6 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreatePhoneDto } from './dto/create-phone.dto';
-import { UpdatePhoneDto } from './dto/update-phone.dto';
 import { PhoneDao } from './phone.dao';
 import { CreatePhoneResponse } from './response/phone.response';
 import { Phone } from './entities/phone.entity';
@@ -16,19 +15,19 @@ export class PhoneService {
             throw new BadRequestException('Error create');
         }
     }
-    findAll() {
-        return `This action returns all phone`;
+    async searchByPhone(phone: number): Promise<Phone[]> {
+        try {
+            const result: Phone[] = await this.phoneDao.searchByPhone(phone);
+            return result;
+        } catch (error) {
+            throw new BadRequestException('Error searchByPhone');
+        }
     }
-
-    findOne(id: number) {
-        return `This action returns a #${id} phone`;
-    }
-
-    update(id: number, updatePhoneDto: UpdatePhoneDto) {
-        return `This action updates a #${id} phone`;
-    }
-
-    remove(id: number) {
-        return `This action removes a #${id} phone`;
+    async deletePhonesByContact(id: string): Promise<void> {
+        try {
+            await this.phoneDao.deletePhonesByContact(id);
+        } catch (error) {
+            throw new BadRequestException('Error deletePhonesByContact');
+        }
     }
 }

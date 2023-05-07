@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateHomeDto } from './dto/create-home.dto';
-import { UpdateHomeDto } from './dto/update-home.dto';
 import { HomeDao } from './home.dao';
 import { Home } from './entities/home.entity';
 import { CreateHomeResponse } from './response/home.response';
+import { SearchByAddressDto } from 'src/contact/dto/search-address.dto';
 
 @Injectable()
 export class HomeService {
@@ -17,20 +17,19 @@ export class HomeService {
             throw new BadRequestException('Error create');
         }
     }
-
-    findAll() {
-        return `This action returns all home`;
+    async searchByAddress(searchByAddressDto: SearchByAddressDto): Promise<Home[]> {
+        try {
+            const result: Home[] = await this.homeDao.searchByAddress(searchByAddressDto);
+            return result;
+        } catch (error) {
+            throw new BadRequestException('Error searchByAddress');
+        }
     }
-
-    findOne(id: number) {
-        return `This action returns a #${id} home`;
-    }
-
-    update(id: number, updateHomeDto: UpdateHomeDto) {
-        return `This action updates a #${id} home`;
-    }
-
-    remove(id: number) {
-        return `This action removes a #${id} home`;
+    async deleteHomeByContact(id: string) {
+        try {
+            await this.homeDao.deleteHomeByContact(id);
+        } catch (error) {
+            throw new BadRequestException('Error deleteHomeByContact');
+        }
     }
 }
