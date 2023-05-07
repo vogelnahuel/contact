@@ -2,7 +2,14 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateContactDto } from './dto/create-contact.dto';
 import { ContactDao } from './contact.dao';
 import { Contact } from './entities/contact.entity';
-import { CreateContactResponse } from './response/contact.response';
+import {
+    CreateContactResponse,
+    FindByEmailResponse,
+    SearchByAddressResponse,
+    SearchByPhoneResponse,
+    SearchContactsResponse,
+    UpdateContactResponse,
+} from './response/contact.response';
 import { SearchContactDto } from './dto/search-contact.dto';
 import { PhoneService } from 'src/phone/phone.service';
 import { HomeService } from 'src/home/home.service';
@@ -48,15 +55,15 @@ export class ContactService {
             throw new BadRequestException('Error create');
         }
     }
-    async findByEmail(email: string): Promise<CreateContactResponse> {
+    async findByEmail(email: string): Promise<FindByEmailResponse> {
         try {
             const result: Contact = await this.contactDao.findByEmail(email);
-            return new CreateContactResponse(result);
+            return new FindByEmailResponse(result);
         } catch (error) {
             throw new BadRequestException('Error findByEmail');
         }
     }
-    async searchContacts(searchContactDto: SearchContactDto): Promise<Contact[]> {
+    async searchContacts(searchContactDto: SearchContactDto): Promise<SearchContactsResponse> {
         try {
             if (searchContactDto.document_number) {
                 searchContactDto.document_number = Number(searchContactDto.document_number);
@@ -65,30 +72,35 @@ export class ContactService {
                 searchContactDto.age = Number(searchContactDto.age);
             }
             const result: Contact[] = await this.contactDao.searchContacts(searchContactDto);
-            return result;
+            return new SearchContactsResponse(result);
         } catch (error) {
             throw new BadRequestException('Error searchContacts');
         }
     }
-    async searchByPhone(phone: string): Promise<Phone[]> {
+    async searchByPhone(phone: string): Promise<SearchByPhoneResponse> {
         try {
             const result: Phone[] = await this.phoneService.searchByPhone(Number(phone));
-            return result;
+            return new SearchByPhoneResponse(result);
         } catch (error) {
             throw new BadRequestException('Error searchByPhone');
         }
     }
-    async searchByAddress(searchByAddressDto: SearchByAddressDto): Promise<Home[]> {
+    async searchByAddress(
+        searchByAddressDto: SearchByAddressDto,
+    ): Promise<SearchByAddressResponse> {
         try {
             const result: Home[] = await this.homeService.searchByAddress(searchByAddressDto);
-            return result;
+            return new SearchByAddressResponse(result);
         } catch (error) {
             throw new BadRequestException('Error searchByAddress');
         }
     }
-    async updateContact(id: string, updateContactDto: UpdateContactDto): Promise<Contact> {
+    async updateContact(
+        id: string,
+        updateContactDto: UpdateContactDto,
+    ): Promise<UpdateContactResponse> {
         try {
-            const contact = await this.contactDao.findById(id);
+            const contact: Contact = await this.contactDao.findById(id);
             if (!contact) {
                 return null;
             }
@@ -112,9 +124,9 @@ export class ContactService {
                 await Promise.all(homePromises);
             }
 
-            await contact.save();
+            const result: Contact = await contact.save();
 
-            return contact;
+            return new UpdateContactResponse(result);
         } catch (error) {
             throw new BadRequestException('Error updateContact');
         }
